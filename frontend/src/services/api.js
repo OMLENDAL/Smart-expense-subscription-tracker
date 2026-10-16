@@ -21,7 +21,7 @@ export async function apiRequest(path, options = {}) {
     });
   } catch {
     // A TypeError here means the browser could not reach the API (network or CORS).
-    throw new Error('Cannot connect to the API. Check the backend URL, availability, and CORS configuration.');
+    throw new Error('Cannot connect to the server. Please make sure the backend is running.');
   }
 
   const data = await response.json();

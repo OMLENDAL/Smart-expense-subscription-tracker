@@ -3,9 +3,6 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS === 'true'
-    ? '/Smart-expense-subscription-tracker/'
-    : '/',
   plugins: [react()],
   server: {
     // Proxy /api requests to the backend during development.

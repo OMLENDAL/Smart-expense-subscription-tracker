@@ -20,7 +20,6 @@ async function initializeDatabase() {
       console.error('Unexpected PostgreSQL client error', error);
     });
 
-    await pool.query(fs.readFileSync(schemaPath, 'utf8'));
     database = pool;
     return;
   }

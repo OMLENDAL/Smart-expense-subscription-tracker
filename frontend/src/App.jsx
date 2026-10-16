@@ -1,5 +1,5 @@
 // This file sets up the main routing for the application.
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -67,9 +67,9 @@ function AppLayout() {
 function App() {
   return (
     <AuthProvider>
-      <HashRouter>
+      <BrowserRouter>
         <AppLayout />
-      </HashRouter>
+      </BrowserRouter>
     </AuthProvider>
   );
 }

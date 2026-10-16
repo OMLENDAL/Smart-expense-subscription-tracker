@@ -33,17 +33,6 @@ The local embedded database is automatically seeded with sample expenses, budget
 
 This is a demo account for the app's regular user dashboard, not an account with separate administrator permissions. The credentials are intentionally simple for local demonstration only; do not use this account or password in a public or production deployment. The demo account is not seeded when using an external PostgreSQL database.
 
-## Deploy the app
-
-Deploy the frontend to GitHub Pages and the API with PostgreSQL to Render:
-
-1. In GitHub, open **Settings → Pages** and set the build and deployment source to **GitHub Actions**. This one-time repository setting cannot be changed by the workflow.
-2. In Render, create a **Blueprint** from this repository and approve the services defined in `render.yaml`. Render provisions the PostgreSQL database and API, configures a private JWT secret, and restricts API access to this project's GitHub Pages origin.
-3. After Render finishes deploying the API, copy its HTTPS URL. If Render assigned a different URL from `https://smart-expense-subscription-tracker-api.onrender.com`, add a GitHub Actions repository variable named `VITE_API_URL` with the API URL ending in `/api` (for example, `https://your-api.onrender.com/api`).
-4. Push to `main` or manually run **Deploy frontend to GitHub Pages** from the **Actions** tab.
-
-The frontend will be available at `https://omlendal.github.io/Smart-expense-subscription-tracker/`. The Pages workflow builds the app at the correct repository path and uses hash-based routing, so refreshes work. GitHub Pages cannot host the backend. Create a new user account on the deployed app; the local demo account is not added to the production database. Render's free database has provider-imposed storage and availability limits; use a suitable persistent database plan for ongoing use.
-
 ## Database
 
 The local app uses an embedded PostgreSQL-compatible database by default. You do not need to install PostgreSQL or Docker. The backend creates the schema automatically and stores local data in `backend/data/pglite`, which is ignored by Git.
