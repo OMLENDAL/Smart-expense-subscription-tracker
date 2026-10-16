@@ -20,6 +20,7 @@ async function initializeDatabase() {
       console.error('Unexpected PostgreSQL client error', error);
     });
 
+    await pool.query(fs.readFileSync(schemaPath, 'utf8'));
     database = pool;
     return;
   }
@@ -33,6 +34,7 @@ async function initializeDatabase() {
   await localDatabase.exec(fs.readFileSync(schemaPath, 'utf8'));
 
   database = localDatabase;
+  await require('../services/demoSeedService').seedDemoAccount();
   console.log(`Using local embedded database at ${localDatabasePath}`);
 }
 
@@ -49,7 +51,9 @@ module.exports = {
   initialize: readyDatabase,
   // All models use this shared query helper for database access.
   query: async (text, params) => {
-    await readyDatabase();
+    if (!database) {
+      await readyDatabase();
+    }
     return database.query(text, params);
   },
   get pool() {

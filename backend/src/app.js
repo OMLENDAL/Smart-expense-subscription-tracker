@@ -14,9 +14,28 @@ const errorMiddleware = require('./middleware/errorMiddleware');
 
 const app = express();
 
-app.use(cors());
+// Allow requests from the Vite dev server and any localhost origin.
+// In production set ALLOWED_ORIGINS to a comma-separated list of origins.
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+  : ['http://localhost:5173', 'http://127.0.0.1:5173'];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow server-to-server requests (no Origin header) and allowed origins.
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS: origin '${origin}' is not allowed`));
+      }
+    },
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(morgan('dev'));
+
 
 const swaggerOptions = {
   definition: {
